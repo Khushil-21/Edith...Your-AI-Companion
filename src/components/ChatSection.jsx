@@ -20,9 +20,10 @@ export default function ChatSection() {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ userInput }),
 			});
+			console.log("response: ", response);
 			if (response.ok) {
 				const data = response.body;
-				
+
 				if (!data) return;
 				const reader = data.getReader();
 				const decoder = new TextDecoder();
@@ -34,7 +35,7 @@ export default function ChatSection() {
 					done = doneReading;
 					const chunkValue = decoder.decode(value);
 					conversation[conversation.length - 1].Message += chunkValue;
-					setConversation([...conversation])
+					setConversation([...conversation]);
 				}
 				console.log("object");
 			} else {
@@ -95,7 +96,13 @@ export default function ChatSection() {
 												: " bg-gray-400 text-white rounded-tl-none"
 										}`}
 									>
-										{value.Message}
+										{value.Message.split("\n").map((line, index) => {
+											return (
+												<div key={index}>
+													{line}
+												</div>
+											);
+										})}
 									</div>
 								</div>
 							</div>
