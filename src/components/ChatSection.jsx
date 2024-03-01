@@ -55,14 +55,34 @@ export default function ChatSection() {
 					{conversation.map((value) => {
 						return (
 							<div key={""} className="flex flex-col gap-2">
-								<div
+								{/* <div
 									className={`w-full flex items-center ${
 										value.Role === "User" ? " justify-end " : " justify-start "
 									}`}
 								>
-									<div className={`px-7 py-2 rounded-md ${
-										value.Role === "User" ? " bg-black text-white " : " bg-gray-400 text-white "
-									}`}>
+									<div
+										className={`px-7 py-2 rounded-md ${
+											value.Role === "User"
+												? " bg-black text-white "
+												: " bg-gray-400 text-white "
+										}`}
+									>
+										{value.Message}
+									</div>
+								</div> */}
+
+								<div
+									className={`chat rounded-md  ${
+										value.Role === "User" ? " chat-end " : " chat-start "
+									}`}
+								>
+									<div
+										className={`chat-bubble px-7 py-2 rounded-md ${
+											value.Role === "User"
+												? " bg-black text-white rounded-tr-none "
+												: " bg-gray-400 text-white rounded-tl-none"
+										}`}
+									>
 										{value.Message}
 									</div>
 								</div>
