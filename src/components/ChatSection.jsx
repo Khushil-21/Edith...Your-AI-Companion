@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 export default function ChatSection() {
 	let [userInput, setUserInput] = useState("");
 	const [conversation, setConversation] = useState([]);
+	console.log("conversation: ", conversation);
+	const [Response, setResponse] = useState([]);
 
 	const inputRef = useRef(null);
 	async function handleSubmit(e) {
@@ -19,11 +21,22 @@ export default function ChatSection() {
 				body: JSON.stringify({ userInput }),
 			});
 			if (response.ok) {
-				const data = await response.json();
-				setConversation([
-					...conversation,
-					{ Role: "Edith", Message: data.response },
-				]);
+				const data = response.body;
+				
+				if (!data) return;
+				const reader = data.getReader();
+				const decoder = new TextDecoder();
+				let done = false;
+				conversation.push({ Role: "EDITH", Message: " " });
+				console.log("object");
+				while (!done) {
+					const { value, done: doneReading } = await reader.read();
+					done = doneReading;
+					const chunkValue = decoder.decode(value);
+					conversation[conversation.length - 1].Message += chunkValue;
+					setConversation([...conversation])
+				}
+				console.log("object");
 			} else {
 				// Handle error (e.g., display error message)
 				console.error("Error fetching response:", response.status);
@@ -70,7 +83,6 @@ export default function ChatSection() {
 										{value.Message}
 									</div>
 								</div> */}
-
 								<div
 									className={`chat rounded-md  ${
 										value.Role === "User" ? " chat-end " : " chat-start "
