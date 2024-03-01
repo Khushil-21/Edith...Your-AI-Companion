@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className="border-4 w-screen h-screen">
+			<body className="w-screen h-screen">
 				{children}
 				<SpeedInsights />
 			</body>
