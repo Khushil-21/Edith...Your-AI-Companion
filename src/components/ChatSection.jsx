@@ -51,7 +51,7 @@ export default function ChatSection() {
 		<div className="flex flex-col border-2 border-green-600 h-full flex-1">
 			<div className="border-4 h-[10%]">1</div>
 			<div className="border-4 flex-1 overflow-auto">
-				<ScrollArea className="h-full w-full rounded-md border p-4 px-10">
+				<ScrollArea className="h-full w-full rounded-md border p-4 px-5">
 					{conversation.map((value) => {
 						return (
 							<div key={""} className="flex flex-col gap-2">
@@ -77,7 +77,7 @@ export default function ChatSection() {
 									}`}
 								>
 									<div
-										className={`chat-bubble px-7 py-2 rounded-md ${
+										className={`my-2 chat-bubble flex flex-wrap max-w-[60%] px-7 py-2 rounded-md ${
 											value.Role === "User"
 												? " bg-black text-white rounded-tr-none "
 												: " bg-gray-400 text-white rounded-tl-none"
