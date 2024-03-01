@@ -3,14 +3,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LucideTrash2 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+
 export default function ChatSection() {
 	let [userInput, setUserInput] = useState("");
 	const [conversation, setConversation] = useState([]);
 	console.log("conversation: ", conversation);
 	const [Response, setResponse] = useState([]);
-
+	const myDivRef = useRef(null);
 	const inputRef = useRef(null);
 	async function handleSubmit(e) {
+		if (!userInput) return;
 		conversation.push({ Role: "User", Message: userInput });
 		setUserInput("");
 		// API call to get response
@@ -20,24 +24,25 @@ export default function ChatSection() {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ userInput }),
 			});
-			console.log("response: ", response);
+
 			if (response.ok) {
 				const data = response.body;
 
 				if (!data) return;
 				const reader = data.getReader();
 				const decoder = new TextDecoder();
+		
 				let done = false;
-				conversation.push({ Role: "EDITH", Message: " " });
-				console.log("object");
+				conversation.push({ Role: "Edith", Message: " " });
+
 				while (!done) {
 					const { value, done: doneReading } = await reader.read();
 					done = doneReading;
 					const chunkValue = decoder.decode(value);
 					conversation[conversation.length - 1].Message += chunkValue;
+			
 					setConversation([...conversation]);
 				}
-				console.log("object");
 			} else {
 				// Handle error (e.g., display error message)
 				console.error("Error fetching response:", response.status);
@@ -61,11 +66,34 @@ export default function ChatSection() {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
 	}, []);
+	useEffect(() => {
+		if (myDivRef.current) {
+			myDivRef.current.scrollTop = myDivRef.current.scrollHeight;
+		}
+	}, [conversation]); // Add relevant dependencies
 	return (
-		<div className="flex flex-col border-2 border-green-600 h-full flex-1">
-			<div className="border-4 h-[10%]">1</div>
-			<div className="border-4 flex-1 overflow-auto">
-				<ScrollArea className="h-full w-full rounded-md border p-4 px-5">
+		<div className="p-4 flex flex-col  border-green-600 h-full flex-1">
+			<div className="mb-2 px-4 h-[9%] flex justify-between items-center">
+				<div className="text-xl font-bold flex gap-2 items-end justify-center">
+					<h1 className="text-5xl animate-gradient font-extrabold bg-gradient-to-r  from-blue-500 via-purple-500 to-red-500 text-transparent bg-clip-text bg-cover ">
+						E.D.I.T.H
+					</h1>
+					<span>Your AI Companion</span>
+				</div>
+				<div onClick={() => setConversation([])}>
+					<Button
+						variant="destructive"
+						className="flex gap-2 justify-center items-center text-base"
+					>
+						<LucideTrash2 /> Clear
+					</Button>
+				</div>
+			</div>
+			<div ref={myDivRef} className="flex-1 overflow-auto">
+				<ScrollArea
+					ref={myDivRef}
+					className="py-5 px-4 border-2 h-full w-full rounded-md "
+				>
 					{conversation.map((value) => {
 						return (
 							<div key={""} className="flex flex-col gap-2">
@@ -84,25 +112,41 @@ export default function ChatSection() {
 										{value.Message}
 									</div>
 								</div> */}
+
 								<div
 									className={`chat rounded-md  ${
 										value.Role === "User" ? " chat-end " : " chat-start "
 									}`}
 								>
-									<div
-										className={`my-2 chat-bubble flex flex-wrap max-w-[60%] px-7 py-2 rounded-md ${
-											value.Role === "User"
-												? " bg-black text-white rounded-tr-none "
-												: " bg-gray-400 text-white rounded-tl-none"
-										}`}
-									>
-										{value.Message.split("\n").map((line, index) => {
-											return (
-												<div key={index}>
-													{line}
-												</div>
-											);
-										})}
+									<div className=" flex items-center gap-3">
+									{value.Role === "Edith" && (
+											<Avatar>
+												<AvatarImage src="https://iconape.com/wp-content/png_logo_vector/robot.png"  />
+												<AvatarFallback>
+													{value.Role === "User" ? "U" : "E"}
+												</AvatarFallback>
+											</Avatar>
+										)}
+									
+										<div
+											className={`my-2 chat-bubble px-7 py-2 rounded-md justify-center items-center ${
+												value.Role === "User"
+													? " bg-black text-white rounded-tr-none "
+													: " bg-gray-400 text-white rounded-tl-none"
+											}`}
+										>
+											{value.Message.split("\n").map((line, index) => {
+												return <div key={index}>{line}</div>;
+											})}
+										</div>
+										{value.Role === "User" && (
+											<Avatar>
+												<AvatarImage src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" />
+												<AvatarFallback>
+													{value.Role === "User" ? "U" : "E"}
+												</AvatarFallback>
+											</Avatar>
+										)}
 									</div>
 								</div>
 							</div>
@@ -110,7 +154,7 @@ export default function ChatSection() {
 					})}
 				</ScrollArea>
 			</div>
-			<div className="flex justify-center items-center border-4 h-[13%]">
+			<div className="flex justify-center items-center h-[12%]">
 				<div className="w-1/2 flex gap-4">
 					<Input
 						type="email"
