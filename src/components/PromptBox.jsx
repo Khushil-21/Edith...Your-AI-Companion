@@ -20,6 +20,7 @@ export default function PromptBox({ handleSubmit, setUserInput, userInput }) {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
 	}, []);
+	
 	return (
 		<div className="flex justify-center items-center h-[12%]">
 			<div className="w-1/2 flex gap-4">
