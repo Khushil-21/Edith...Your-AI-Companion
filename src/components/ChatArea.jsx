@@ -91,10 +91,11 @@ export default function ChatArea() {
 								</div>
 							</div>
 						);
-					}) : <div className="w-full h-[500px] text-2xl flex justify-center items-center">
-						No Messages Yet
-						<br></br>
-						Start Your Conversation
+					}) : <div className="w-full h-[500px] text-2xl flex flex-col justify-center items-center">
+						<span>No Messages Yet</span>
+						<span>Start Your Conversation</span>
+						
+						
 					</div>
 				
 				}
