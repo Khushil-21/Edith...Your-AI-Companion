@@ -70,15 +70,17 @@ export default function ChatArea() {
 											</Avatar>
 										)}
 										<div
-											className={`gap-2 my-3 chat-bubble max-w-[75%] px-7 py-2 rounded-md flex flex-col justify-center items-start ${
+											className={`gap-2 my-3 chat-bubble max-w-[80%] px-7 py-2 rounded-md flex flex-col justify-center items-start ${
 												value.Role === "User"
 													? " bg-primary text-white rounded-tr-none "
 													: " bg-white text-secondary-foreground rounded-tl-none"
 											}`}
 										>
-											{value.Message.split("\n").map((line, index) => {
-												return <div key={index}>{line}</div>;
-											})}
+											<div className="">
+												{value.Message.split("\n").map((line, index) => {
+													return <div key={index}>{line}</div>;
+												})}
+											</div>
 										</div>
 										{value.Role === "User" && (
 											<Avatar className="mt-4">
