@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ChatHeader from "./ChatHeader";
 import PromptBox from "./PromptBox";
 import ChatArea from "./ChatArea";
+import { useQuery } from "@tanstack/react-query";
 export default function ChatSection() {
 	let [userInput, setUserInput] = useState("");
 	const [conversation, setConversation] = useState([]);
@@ -46,7 +47,7 @@ export default function ChatSection() {
 			console.error("Network error:", error);
 		}
 	}
-
+	
 	return (
 		<div className="p-4 flex flex-col  border-green-600 h-full flex-1">
 			<ChatHeader setConversation={setConversation} />

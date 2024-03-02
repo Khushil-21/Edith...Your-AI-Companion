@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import ReactQueryProvider from "@/Providers/ReactQueryProvider";
+import TanstackReactQueryProvider from "@/Providers/TanstackReactQueryProvider";
 
 export const metadata = {
 	title: "Create Next App",
@@ -12,10 +12,10 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className="w-screen h-screen">
-				<ReactQueryProvider>
+				<TanstackReactQueryProvider>
 					{children}
 					<SpeedInsights />
-				</ReactQueryProvider>
+				</TanstackReactQueryProvider>
 			</body>
 		</html>
 	);
