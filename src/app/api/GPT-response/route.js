@@ -1,3 +1,4 @@
+import { getGlobalConversation } from "@/lib/GlobalConversation";
 import { OpenAIStream } from "@/utils/OpenAIStream";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
@@ -11,24 +12,31 @@ export async function POST(request) {
 	try {
 		const stream = await openai.chat.completions.create({
 			model: "gpt-3.5-turbo",
-			messages: [{ role: "system", content: "you are an helpful ai chatbot named EDITH. your task is to give good answers to user" },{ role: "user", content: userInput }],
+			messages: [
+				{
+					role: "system",
+					content:
+						"you are an helpful ai chatbot named EDITH. your task is to give all answers to  user and completes tasks.when user says hello also introduce yourself and ask what help he needs.All responses should be in proper format use paragraph and points also if needed",
+				},
+				{ role: "user", content: userInput },
+			],
 			stream: true,
-			max_tokens:400,
+			max_tokens: 400,
 		});
 		return new Response(
 			// Create a readable stream to pipe the chunks into
 			new ReadableStream({
-			  async start(controller) {
-				// Stream the chunks from OpenAI
-				for await (const chunk of stream) {
-				  const data = chunk.choices[0]?.delta?.content || "";
-				  controller.enqueue(`${data}`); // Format as SSE
-				}
-				controller.close(); // Close the stream
-			  }
+				async start(controller) {
+					// Stream the chunks from OpenAI
+					for await (const chunk of stream) {
+						const data = chunk.choices[0]?.delta?.content || "";
+						controller.enqueue(`${data}`); // Format as SSE
+					}
+					controller.close(); // Close the stream
+				},
 			}),
 			{
-			  headers: { "Content-Type": "text/event-stream" }
+				headers: { "Content-Type": "text/event-stream" },
 			}
 		);
 		return new NextResponse(`1. Cows are domesticated animals that are commonly raised for their milk, meat, and leather.
