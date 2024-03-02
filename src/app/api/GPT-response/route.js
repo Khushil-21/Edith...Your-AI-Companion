@@ -36,7 +36,7 @@ export async function POST(request) {
 		// 	  headers: { "Content-Type": "text/event-stream" } 
 		// 	}
 		// );
-		return new NextResponse("HELLO HOW CAN I HELP YOU !!!")
+		return new NextResponse("HELLO HOW CAN I HELP YOU !!!HELLO HOW CAN I HELP YOU !!!HELLO HOW CAN I HELP YOU !!!HELLO HOW CAN I HELP YOU !!!HELLO HOW CAN I HELP YOU !!!HELLO HOW CAN I HELP YOU !!!")
 		// const payload = {
 		// 	model: "gpt-3.5-turbo",
 		// 	messages: [{ role: "user", content: userInput }],

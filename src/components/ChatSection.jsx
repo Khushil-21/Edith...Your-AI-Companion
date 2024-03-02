@@ -3,9 +3,24 @@ import React, { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LucideTrash2 } from "lucide-react";
+import { LucideSettings, LucideTrash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 export default function ChatSection() {
 	let [userInput, setUserInput] = useState("");
 	const [conversation, setConversation] = useState([]);
@@ -31,7 +46,7 @@ export default function ChatSection() {
 				if (!data) return;
 				const reader = data.getReader();
 				const decoder = new TextDecoder();
-		
+
 				let done = false;
 				conversation.push({ Role: "Edith", Message: " " });
 
@@ -40,7 +55,7 @@ export default function ChatSection() {
 					done = doneReading;
 					const chunkValue = decoder.decode(value);
 					conversation[conversation.length - 1].Message += chunkValue;
-			
+
 					setConversation([...conversation]);
 				}
 			} else {
@@ -80,19 +95,61 @@ export default function ChatSection() {
 					</h1>
 					<span>Your AI Companion</span>
 				</div>
-				<div onClick={() => setConversation([])}>
+				<div onClick={() => setConversation([])} className="flex gap-5">
 					<Button
 						variant="destructive"
 						className="flex gap-2 justify-center items-center text-base"
 					>
 						<LucideTrash2 /> Clear
 					</Button>
+					<div>
+						<Sheet>
+							<SheetTrigger asChild>
+								<Button
+									variant="default"
+									className="flex gap-2 justify-center items-center text-base"
+								>
+									<LucideSettings />
+									Settings
+								</Button>
+							</SheetTrigger>
+							<SheetContent>
+								<SheetHeader>
+									<SheetTitle></SheetTitle>
+									<SheetDescription>
+										<div className="h-[30%] w-full flex justify-center items-center">
+											<DropdownMenu>
+												<DropdownMenuTrigger asChild>
+													<Button variant="default">Select Model</Button>
+												</DropdownMenuTrigger>
+												<DropdownMenuContent className="w-56">
+													<DropdownMenuLabel>
+														AI Model Selection
+													</DropdownMenuLabel>
+													<DropdownMenuSeparator />
+													<DropdownMenuCheckboxItem checked={true}>
+														ChatGPT
+													</DropdownMenuCheckboxItem>
+													<DropdownMenuCheckboxItem disabled>
+														Gemini
+													</DropdownMenuCheckboxItem>
+												</DropdownMenuContent>
+											</DropdownMenu>
+										</div>
+									</SheetDescription>
+								</SheetHeader>
+							</SheetContent>
+						</Sheet>
+					</div>
 				</div>
 			</div>
-			<div ref={myDivRef} className="flex-1 overflow-auto">
+			<div
+				ref={myDivRef}
+				className="flex-1 overflow-auto flex justify-center items-center"
+			>
 				<ScrollArea
 					ref={myDivRef}
-					className="py-5 px-4 border-2 h-full w-full rounded-md "
+					className="w-[90%] py-5 px-4 border-2 h-full  rounded-md "
 				>
 					{conversation.map((value) => {
 						return (
@@ -118,18 +175,23 @@ export default function ChatSection() {
 										value.Role === "User" ? " chat-end " : " chat-start "
 									}`}
 								>
-									<div className=" flex items-center gap-3">
-									{value.Role === "Edith" && (
+									<div
+										className={`w-full flex items-center gap-3 ${
+											value.Role === "User"
+												? " justify-end "
+												: " justify-start "
+										}`}
+									>
+										{value.Role === "Edith" && (
 											<Avatar>
-												<AvatarImage src="https://iconape.com/wp-content/png_logo_vector/robot.png"  />
+												<AvatarImage src="https://iconape.com/wp-content/png_logo_vector/robot.png" />
 												<AvatarFallback>
 													{value.Role === "User" ? "U" : "E"}
 												</AvatarFallback>
 											</Avatar>
 										)}
-									
 										<div
-											className={`my-2 chat-bubble px-7 py-2 rounded-md justify-center items-center ${
+											className={`my-2 chat-bubble max-w-[60%] px-7 py-2 rounded-md flex justify-center items-center ${
 												value.Role === "User"
 													? " bg-black text-white rounded-tr-none "
 													: " bg-gray-400 text-white rounded-tl-none"

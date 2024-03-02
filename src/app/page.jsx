@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<div className="flex h-full">
 			<ChatSection/>
-			<Sidebar />
+			{/* <Sidebar /> */}
 		</div>
 	);
 }
