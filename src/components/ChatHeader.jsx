@@ -16,9 +16,23 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LucideSettings, LucideTrash2 } from "lucide-react";
+import {
+	LucideBot,
+	LucideKeyboard,
+	LucideSettings,
+	LucideTextSelect,
+	LucideTrash2,
+} from "lucide-react";
 import { deleteGlobalConversation } from "@/lib/GlobalConversation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "./ui/dialog";
 export default function ChatHeader() {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
@@ -61,11 +75,13 @@ export default function ChatHeader() {
 						<SheetContent>
 							<SheetHeader>
 								<SheetTitle></SheetTitle>
-								<SheetDescription>
-									<div className="h-[30%] w-full flex justify-center items-center">
+								<SheetDescription className="min-h-[90vh] flex flex-col justify-between">
+									<div className="h-[30%] w-full flex justify-between pt-10 items-center">
 										<DropdownMenu>
 											<DropdownMenuTrigger asChild>
-												<Button variant="default">Select Model</Button>
+												<Button variant="default" className="flex gap-1">
+													<LucideBot /> Select Model
+												</Button>
 											</DropdownMenuTrigger>
 											<DropdownMenuContent className="w-56">
 												<DropdownMenuLabel>
@@ -80,6 +96,59 @@ export default function ChatHeader() {
 												</DropdownMenuCheckboxItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
+										<Dialog>
+											<DialogTrigger asChild>
+												<Button
+													variant="secondary"
+													className="flex gap-1 bg-gray-300 hover:bg-gray-200"
+												>
+													<LucideKeyboard /> Keyboards shortcuts
+												</Button>
+											</DialogTrigger>
+											<DialogContent>
+												<DialogHeader>
+													<DialogTitle className="text-center">
+														Keyboard Shortcuts
+													</DialogTitle>
+													<DialogDescription className="">
+														<div className="mt-5 p-4 flex flex-col gap-10">
+															<div className="w-full flex justify-around items-center">
+																<div className="pl-5 w-1/2">
+																	<kbd className="bg-gray-200 p-2 rounded-md">
+																		crtl
+																	</kbd>{" "}
+																	+{" "}
+																	<kbd className=" bg-gray-200 p-2 rounded-md">
+																		/
+																	</kbd>
+																</div>
+																<div className="pl-5 w-1/2 text-lg font-medium">
+																	Go To Prompt Box
+																</div>
+															</div>
+															<div className="w-full flex justify-around items-center">
+																<div className="pl-5 w-1/2">
+																	<kbd className="bg-gray-200 p-2 rounded-md">
+																		Enter
+																	</kbd>
+																</div>
+																<div className="pl-5 w-1/2 text-lg font-medium">
+																	Send Prompt
+																</div>
+															</div>
+														</div>
+													</DialogDescription>
+												</DialogHeader>
+											</DialogContent>
+										</Dialog>
+									</div>
+									<div className="text-primary flex-1 gap-10 flex flex-col justify-center items-center">
+										<div>
+											<LucideTextSelect width={150} height={150}/>
+										</div>
+										<div className="text-xl">
+											New Content Will Be Added Soon
+										</div>
 									</div>
 								</SheetDescription>
 							</SheetHeader>

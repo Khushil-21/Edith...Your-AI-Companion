@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className="w-screen h-screen bg-indigo-100">
+			<body className="w-screen h-screen bg--100">
 				<TanstackReactQueryProvider>
 					{children}
 					<SpeedInsights />
