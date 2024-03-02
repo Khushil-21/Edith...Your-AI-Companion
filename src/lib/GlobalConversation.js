@@ -7,10 +7,14 @@ export function getGlobalConversation() {
 }
 export function setGlobalConversation(Role, Message) {
 	console.log(Role);
-	conversation.push({Role,Message})
+	if (Role === conversation[conversation.length - 1].Role) {
+		conversation[conversation.length - 1].Message += Message;
+	} else {
+		conversation.push({ Role, Message });
+	}
 	return "done";
 }
 export function deleteGlobalConversation() {
-	conversation=[]
+	conversation = [];
 	return "done";
 }
