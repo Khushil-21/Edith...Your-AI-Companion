@@ -28,10 +28,11 @@ export default function ChatArea() {
 				ref={myDivRef}
 				className="w-[90%] py-5 px-4 border-2 h-full  rounded-md "
 			>
-				{conversation?.map((value) => {
-					return (
-						<div key={""} className="flex flex-col gap-2">
-							{/* <div
+				{conversation?.length!=0 ?
+					conversation?.map((value) => {
+						return (
+							<div key={""} className="flex flex-col gap-2">
+								{/* <div
 									className={`max-w-[60%] flex items-center ${
 										value.Role === "User" ? " justify-end " : " justify-start "
 									}`}
@@ -47,48 +48,56 @@ export default function ChatArea() {
 									</div>
 								</div> */}
 
-							<div
-								className={`chat rounded-md  ${
-									value.Role === "User" ? " chat-end " : " chat-start "
-								}`}
-							>
 								<div
-									className={`w-full flex items-center gap-3 ${
-										value.Role === "User" ? " justify-end " : " justify-start "
+									className={`chat rounded-md  ${
+										value.Role === "User" ? " chat-end " : " chat-start "
 									}`}
 								>
-									{value.Role === "Edith" && (
-										<Avatar>
-											<AvatarImage src="https://iconape.com/wp-content/png_logo_vector/robot.png" />
-											<AvatarFallback>
-												{value.Role === "User" ? "U" : "E"}
-											</AvatarFallback>
-										</Avatar>
-									)}
 									<div
-										className={`gap-2 my-3 chat-bubble max-w-[90%] px-7 py-2 rounded-md flex flex-col justify-center items-start ${
+										className={`w-full flex items-center gap-3 ${
 											value.Role === "User"
-												? " bg-black text-white rounded-tr-none "
-												: " bg-gray-400 text-white rounded-tl-none"
+												? " justify-end "
+												: " justify-start "
 										}`}
 									>
-										{value.Message.split("\n").map((line, index) => {
-											return <div key={index}>{line}</div>;
-										})}
+										{value.Role === "Edith" && (
+											<Avatar>
+												<AvatarImage src="https://iconape.com/wp-content/png_logo_vector/robot.png" />
+												<AvatarFallback>
+													{value.Role === "User" ? "U" : "E"}
+												</AvatarFallback>
+											</Avatar>
+										)}
+										<div
+											className={`gap-2 my-3 chat-bubble max-w-[75%] px-7 py-2 rounded-md flex flex-col justify-center items-start ${
+												value.Role === "User"
+													? " bg-black text-white rounded-tr-none "
+													: " bg-gray-400 text-white rounded-tl-none"
+											}`}
+										>
+											{value.Message.split("\n").map((line, index) => {
+												return <div key={index}>{line}</div>;
+											})}
+										</div>
+										{value.Role === "User" && (
+											<Avatar>
+												<AvatarImage src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" />
+												<AvatarFallback>
+													{value.Role === "User" ? "U" : "E"}
+												</AvatarFallback>
+											</Avatar>
+										)}
 									</div>
-									{value.Role === "User" && (
-										<Avatar>
-											<AvatarImage src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" />
-											<AvatarFallback>
-												{value.Role === "User" ? "U" : "E"}
-											</AvatarFallback>
-										</Avatar>
-									)}
 								</div>
 							</div>
-						</div>
-					);
-				})}
+						);
+					}) : <div className="w-full h-[500px] text-2xl flex justify-center items-center">
+						No Messages Yet
+						<br></br>
+						Start Your Conversation
+					</div>
+				
+				}
 			</ScrollArea>
 		</div>
 	);

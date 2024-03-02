@@ -18,9 +18,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { LucideSettings, LucideTrash2 } from "lucide-react";
 import { deleteGlobalConversation } from "@/lib/GlobalConversation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 export default function ChatHeader() {
 	const queryClient = useQueryClient();
+	const { mutate } = useMutation({
+		mutationFn: () => {
+			deleteGlobalConversation();
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries(["Conversation"]);
+		},
+	});
 	return (
 		<div className="mb-2 px-4 h-[9%] flex justify-between items-center">
 			<div className="text-xl font-bold flex gap-2 items-end justify-center">
@@ -32,8 +40,7 @@ export default function ChatHeader() {
 			<div className="flex gap-5">
 				<Button
 					onClick={() => {
-						deleteGlobalConversation()
-						queryClient.invalidateQueries(["Conversation"]);
+						mutate();
 					}}
 					variant="destructive"
 					className="flex gap-2 justify-center items-center text-base"

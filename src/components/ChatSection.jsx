@@ -18,6 +18,7 @@ export default function ChatSection() {
 		mutationFn: () => {
 			setGlobalConversation("User", userInput);
 			setUserInput("");
+
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries(["Conversation"]);
@@ -33,6 +34,7 @@ export default function ChatSection() {
 	});
 	async function handleSubmit(e) {
 		if (!userInput) return;
+		console.log("userInput: ", userInput);
 		mutate();
 		try {
 			const response = await fetch("/api/GPT-response", {
