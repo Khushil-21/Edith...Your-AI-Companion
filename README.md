@@ -28,7 +28,7 @@ To install the dependencies, follow these steps:
 
 1. Clone the repository to your local machine:
    ```sh
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/Khushil-21/Edith...Your-AI-Companion.git
 2. Install All dependencies
    ```sh
    npm install
