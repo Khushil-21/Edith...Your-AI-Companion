@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { getGlobalConversation } from "@/lib/GlobalConversation";
+import { LucideCopyX } from "lucide-react";
 
 export default function ChatArea() {
 	const { data: conversation } = useQuery({
@@ -22,13 +23,13 @@ export default function ChatArea() {
 	return (
 		<div
 			ref={myDivRef}
-			className="flex-1 overflow-auto flex justify-center items-center"
+			className="flex-1 overflow-auto py-2  flex justify-center items-center"
 		>
 			<ScrollArea
 				ref={myDivRef}
-				className="w-[90%] py-5 px-4 border-2 h-full  rounded-md "
+				className="bg-white shadow-md w-[90%] py-3 px-4 border-2 border-primary/70 h-full  rounded-md "
 			>
-				{conversation?.length!=0 ?
+				{conversation?.length!=0 && conversation ?
 					conversation?.map((value) => {
 						return (
 							<div key={""} className="flex flex-col gap-2">
@@ -71,8 +72,8 @@ export default function ChatArea() {
 										<div
 											className={`gap-2 my-3 chat-bubble max-w-[75%] px-7 py-2 rounded-md flex flex-col justify-center items-start ${
 												value.Role === "User"
-													? " bg-black text-white rounded-tr-none "
-													: " bg-gray-400 text-white rounded-tl-none"
+													? " bg-primary text-white rounded-tr-none "
+													: " bg-gray-200 text-secondary-foreground rounded-tl-none"
 											}`}
 										>
 											{value.Message.split("\n").map((line, index) => {
@@ -91,9 +92,12 @@ export default function ChatArea() {
 								</div>
 							</div>
 						);
-					}) : <div className="w-full h-[500px] text-2xl flex flex-col justify-center items-center">
-						<span>No Messages Yet</span>
+					}) : <div className="w-full h-[500px] gap-10 text-2xl flex flex-col justify-center items-center">
+						<LucideCopyX height={100} width={100}/>
+						<div className="flex flex-col gap-2 justify-center items-center ">
+						<span className="">No Messages Yet</span>
 						<span>Start Your Conversation</span>
+						</div>
 						
 						
 					</div>
