@@ -1,8 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-const inter = Inter({ subsets: ["latin"] });
+import ReactQueryProvider from "@/Providers/ReactQueryProvider";
 
 export const metadata = {
 	title: "Create Next App",
@@ -13,8 +12,10 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className="w-screen h-screen">
-				{children}
-				<SpeedInsights />
+				<ReactQueryProvider>
+					{children}
+					<SpeedInsights />
+				</ReactQueryProvider>
 			</body>
 		</html>
 	);
