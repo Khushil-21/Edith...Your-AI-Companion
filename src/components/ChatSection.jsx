@@ -18,7 +18,6 @@ export default function ChatSection() {
 		mutationFn: () => {
 			setGlobalConversation("User", userInput);
 			setUserInput("");
-
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries(["Conversation"]);
@@ -42,7 +41,7 @@ export default function ChatSection() {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ userInput }),
 			});
-
+			console.log(response);
 			if (response.ok) {
 				const data = response.body;
 
@@ -60,6 +59,11 @@ export default function ChatSection() {
 					chunk(chunkValue);
 				}
 			} else {
+				console.log("here");
+				setGlobalConversation("Edith", " ");
+				chunk(
+					"Error In Generating Response !! \nTry Again Later !! Sorry for the inconvenience"
+				);
 				// Handle error (e.g., display error message)
 				console.error("Error fetching response:", response.status);
 			}

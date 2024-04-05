@@ -5,7 +5,8 @@ export function getGlobalConversation() {
 export function setGlobalConversation(Role, Message) {
 	if (
 		conversation.length != 0 &&
-		Role === conversation[conversation.length - 1].Role
+		Role === conversation[conversation.length - 1].Role &&
+		Role === "Edith"
 	) {
 		conversation[conversation.length - 1].Message += Message;
 	} else {
