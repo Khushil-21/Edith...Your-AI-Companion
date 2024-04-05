@@ -17,6 +17,9 @@ Introducing EDITH, your cutting-edge AI companion. Powered by advanced language 
 - Real-Time streaming
 - Keyboard Shortcuts
 - User friendly interface
+## Example Video
+https://github.com/Khushil-21/Edith...Your-AI-Companion/assets/98098937/9155d722-19ca-48bb-b1a6-c916445102f6
+
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
@@ -34,4 +37,8 @@ To install the dependencies, follow these steps:
    npm install
 3. Run Project
    ```sh
+
+
+
+
    npm run dev
