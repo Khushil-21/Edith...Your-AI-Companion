@@ -8,6 +8,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export async function POST(request) {
 	const { userInput } = await request.json();
 	console.log("userInput: ", userInput);
+	console.log("process.env.OPENAI_API_KEY: ", process.env.OPENAI_API_KEY);
 
 	try {
 		const stream = await openai.chat.completions.create({
@@ -21,7 +22,6 @@ export async function POST(request) {
 				{ role: "user", content: userInput },
 			],
 			stream: true,
-			max_tokens: 400,
 		});
 		return new Response(
 			// Create a readable stream to pipe the chunks into
