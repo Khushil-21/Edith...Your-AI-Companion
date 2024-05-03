@@ -65,7 +65,7 @@ export async function POST(request) {
 		// console.log("stream: ", stream);
 		// return new NextResponse(stream);
 	} catch (error) {
-		console.error("OpenAI Error:", error);
+		console.log("OpenAI Error:", error.message);
 		return NextResponse.json(
 			{ error: "Failed to fetch response from OpenAI" },
 			{ status: 500 }
